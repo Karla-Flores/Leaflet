@@ -32,29 +32,34 @@ function createFeature(data) {
     function onEachFeature(feature, layer) {
         layer.binfPopup('<h1>' + feature.properties.title + '</h1>' + '<hr>' + '<p>' + 'Type : ' + feature.properties.type + '</p>' + '<br>' + '<p>' + 'Magnitude : ' + feature.properties.mag + '</p>')
     }
-}
     // Creating circle marker
-    var earthquake = L.geoJson(data,{
-        poinToLayer: function(feature, latlng){
+    var earthquake = L.geoJson(data, {
+        poinToLayer: function (feature, latlng) {
             // Defining circle radius according to the magnitude
-            return new L.CircleMarker(latlng,{
-                radius : feature.properties.mag * 5,
-                fillOpacity : 0.6,
-                color : getColor(feature.properties.mag)
+            return new L.CircleMarker(latlng, {
+                radius: feature.properties.mag * 5,
+                fillOpacity: 0.6,
+                color: getColor(feature.properties.mag)
             })
-        }
+        },
+        //Adding pup ups
+        onEachFeature: onEachFeature
     });
+    createMap(earthquake);
+};
+
+// Function for creating map
 
 
-// Creating the map object
-let myMap = L.map('map', {
-    center: [34.0522, -118.2437],
-    zoom: 5
-});
+        // Creating the map object
+        let myMap = L.map('map', {
+            center: [34.0522, -118.2437],
+            zoom: 5
+        });
 
-// Adding the tile layer
-let layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(myMap);
+    // Adding the tile layer
+    let layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(myMap);
 
 
