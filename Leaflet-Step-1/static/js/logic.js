@@ -1,6 +1,19 @@
 // Load the GeoJSON url.
 let url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week.geojson';
 
+// Creating the map object
+var myMap = L.map("map", {
+    center: [34.0522, -118.2437],
+    zoom: 5
+});
+
+// Adding the tile layer
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(myMap);
+
+
+
 // Get marker color bases on earthquake magnitude
 function getColor(mag) {
     if (mag >= 5) {
@@ -26,40 +39,67 @@ function getColor(mag) {
     }
 };
 
-// Function for map features
-function createFeature(data) {
-    //Pop up layer using title, title and magnitude
-    function onEachFeature(feature, layer) {
-        layer.binfPopup('<h1>' + feature.properties.title + '</h1>' + '<hr>' + '<p>' + 'Type : ' + feature.properties.type + '</p>' + '<br>' + '<p>' + 'Magnitude : ' + feature.properties.mag + '</p>')
-    }
-    // Creating circle marker
-    var earthquake = L.geoJson(data, {
-        poinToLayer: function (feature, latlng) {
-            // Defining circle radius according to the magnitude
+// Get Data
+d3.json(url).then(function (data) {
+    console.log(data);
+    L.geoJSON(data, {
+        onEachFeature: onEachFeature,
+        // Creating circle marker
+        pointToLayer: function (feature, latlng) {
+            console.log('Creatin marker');
             return new L.CircleMarker(latlng, {
+                // Defining circle radius according to the magnitude
                 radius: feature.properties.mag * 5,
                 fillOpacity: 0.6,
                 color: getColor(feature.properties.mag)
-            })
-        },
-        //Adding pup ups
-        onEachFeature: onEachFeature
+            });
+        }
     });
-    createMap(earthquake);
-};
+}).addTo(myMap);
 
-// Function for creating map
+function onEachFeature(feature, layer){
+    console.log('Creating pop up'),
+    //Pop up layer using title, title and magnitude
+    layer.binfPopup('<h1>' + feature.properties.title + '</h1>' + '<hr>' + '<p>' + 'Type : ' + feature.properties.type + '</p>' + '<br>' + '<p>' + 'Magnitude : ' + feature.properties.mag + '</p>')
+}
 
+// // Function for map features
+// function createFeatures(edata) {
+//     //Pop up layer using title, title and magnitude
+//     function onEachFeature(feature, layer) {
+//         layer.binfPopup('<h1>' + feature.properties.title + '</h1>' + '<hr>' + '<p>' + 'Type : ' + feature.properties.type + '</p>' + '<br>' + '<p>' + 'Magnitude : ' + feature.properties.mag + '</p>')
+//     }
+//     // Creating circle marker
+//     let earthquake = L.geoJson(edata, {
+//         poinToLayer: function (feature, latlng) {
+//             // Defining circle radius according to the magnitude
+//             return new L.CircleMarker(latlng, {
+//                 radius: feature.properties.mag * 5,
+//                 fillOpacity: 0.6,
+//                 color: getColor(feature.properties.mag)
+//             })
+//         },
+//         //Adding pup ups
+//         onEachFeature: onEachFeature
+//     });
+//     createMap(earthquake);
+// });
 
-        // Creating the map object
-        let myMap = L.map('map', {
-            center: [34.0522, -118.2437],
-            zoom: 5
-        });
+// // Function for creating map
+// function createMap(earthquake) {
+//     // Tile Layer
+//     let layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+//     });
+//     // 
+//     let myMap = L.map('map', {
+//         center: [34.0522, -118.2437],
+//         zoom: 5
+//     });
+// }
+
 
     // Adding the tile layer
-    let layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(myMap);
+
 
 
