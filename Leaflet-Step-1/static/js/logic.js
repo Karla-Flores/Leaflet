@@ -15,7 +15,7 @@ function getColor(mag) {
                 if (mag > 2) {
                     return "#FFBD71"
                 } else {
-                    if (mag > 2) {
+                    if (mag > 1) {
                         return "#FFDCA2"
                     } else {
                         return "#C8C6C9"
@@ -25,6 +25,15 @@ function getColor(mag) {
         }
     }
 };
+
+// Function for map features
+function createFeature(data){
+    //Pop up layer using title, title and magnitude
+    function onEachFeature (feature, layer){
+        layer.binfPopup('<h1>'+ 'feature.title' + '</h1>' + '<hr>' )
+    }
+}
+
 
 // Creating the map object
 let myMap = L.map("map", {
