@@ -1,5 +1,5 @@
 // Load the GeoJSON url.
-let url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week.geojson';
+let url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson';
 
 // Creating the map object
 var myMap = L.map("map", {
@@ -37,6 +37,37 @@ function getColor(mag) {
     }
 };
 
+// Depth function
+function getFillColor(depth) {
+    if (depth >= 90) {
+        return '#feb236'
+    } else {
+        if (depth > 60) {
+            return '#eca1a6'
+        } else {
+            if (depth > 50) {
+                return '#d64161'
+            } else {
+                if (depth > 40) {
+                    return '#ff7b25'
+                } else {
+                    if (depth > 30) {
+                        return '#FFDCA2'
+                    } else {
+                        if (depth > 20) {
+                            return '#C8C6C9'
+                        } else {
+                            if (depth >10) {
+                                return
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 // Get Data
 d3.json(url).then(function (data) {
     console.log(data);
@@ -47,20 +78,22 @@ d3.json(url).then(function (data) {
             console.log('Creatin marker');
             return new L.CircleMarker(latlng, {
                 // Defining circle radius according to the magnitude
-                radius: feature.properties.mag * 5,
-                fillOpacity: 0.6,
-                color: getColor(feature.properties.mag)
-            });
+                radius: feature.properties.mag * 7,
+                getFillCollor: feature.geometry.coordinates[2],
+                fillOpacity: 0.8,
+                // color: getColor(feature.properties.mag)
+            }).addTo(myMap);
         }
     });
-}).addTo(myMap);
+});
 
 // Starting pop up layers
-function onEachFeature(feature, layer){
+function onEachFeature(feature, layer) {
     // console.log('Creating pop up'),
     //Pop up layer using title, title and magnitude
-    var popupText = (layer.binfPopup('<h1>' + 'Location : '+ feature.properties.title + '</h1>' + '<hr>' + '<p>' + 'Type : ' + feature.properties.type + '</p>' + '<br>' + '<p>' + 'Magnitude : ' + feature.properties.mag + '</p>'
-    ))};
+    var popupText = (layer.binfPopup('<h1>' + 'Location : ' + feature.properties.title + '</h1>' + '<hr>' + '<p>' + 'Type : ' + feature.properties.type + '</p>' + '<br>' + '<p>' + 'Magnitude : ' + feature.properties.mag + '</p>'
+    )).addTo(myMap)
+};
 
 layer.bindPopup(popupText);
 
