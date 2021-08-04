@@ -13,62 +13,62 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(myMap);
 
 // Get marker color bases on earthquake magnitude
-function getColor(mag) {
-    if (mag >= 5) {
-        return '#C73866'
-    } else {
-        if (mag > 4) {
-            return '#FE676e'
-        } else {
-            if (mag > 3) {
-                return '#FD8F52'
-            } else {
-                if (mag > 2) {
-                    return '#FFBD71'
-                } else {
-                    if (mag > 1) {
-                        return '#FFDCA2'
-                    } else {
-                        return '#C8C6C9'
-                    }
-                }
-            }
-        }
-    }
-};
+// function getColor(mag) {
+//     if (mag >= 5) {
+//         return '#C73866'
+//     } else {
+//         if (mag > 4) {
+//             return '#FE676e'
+//         } else {
+//             if (mag > 3) {
+//                 return '#FD8F52'
+//             } else {
+//                 if (mag > 2) {
+//                     return '#FFBD71'
+//                 } else {
+//                     if (mag > 1) {
+//                         return '#FFDCA2'
+//                     } else {
+//                         return '#C8C6C9'
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// };
 
 // Depth function
 function getFillColor(depth) {
     if (depth >= 90) {
-        return '#df8782'
+        return '#21b2b3'
     } else {
         if (depth > 80) {
-            return '#e7a08c'
+            return '#72c1b2'
         }
         else {
             if (depth > 70) {
-                return '#eeb899'
+                return '#a0cfb4'
             }
             else {
                 if (depth > 60) {
-                    return '#f4d0a9'
+                    return '#c7deb9'
                 } else {
                     if (depth > 50) {
-                        return '#fae8c0'
+                        return '#e8edc7'
                     } else {
                         if (depth > 40) {
-                            return '#ffd9c3'
+                            return '#ffdcc1'
                         } else {
                             if (depth > 30) {
-                                return '#ffb0a4'
+                                return '#ffb89f'
                             } else {
                                 if (depth > 20) {
-                                    return '#ff8483'
+                                    return '#ff9278'
                                 } else {
                                     if (depth > 10) {
-                                        return '#fd4e5d'
+                                        return '#ff644a'
                                     } else {
-                                        return '#e9002c'
+                                        return '#ff0000'
                                     }
                                 }
                             }
@@ -103,8 +103,10 @@ d3.json(url).then(function (data) {
 // Starting pop up layers
 function onEachFeature(feature, layer) {
     // console.log('Creating pop up'),
+    // Time format
+    var format = d3.timeFormat('%d-%b-%Y at %H:%M');
     //Pop up layer using title, title and magnitude
-    var popupText = (layer.bindPopup('<h2>' + 'Location : ' + '<br>' + feature.properties.title + '</h2>' + '<hr>' + '<h3>' + 'Type : ' + feature.properties.type + '</h3>' + '<h3>' + 'Magnitude : ' + feature.properties.mag + '</h3>' + '<h3>' + 'Depth : '+feature.geometry.coordinates[2] + '</h3>'
+    var popupText = (layer.bindPopup('<h2>' + 'Location : ' + '<br>' + feature.properties.title + '</h2>' + '<hr>' + '<h3>' + 'Time : ' + (format(new Date (feature.properties.time))) + '</h3>' + '<h3>' + 'Type : '   + feature.properties.type + '</h3>' + '<h3>' + 'Magnitude : ' + feature.properties.mag + '</h3>' + '<h3>' + 'Depth : '+feature.geometry.coordinates[2] + '</h3>'
     )).addTo(myMap)
 };
 
@@ -114,7 +116,7 @@ legend.onAdd = function () {
 
     var div = L.DomUtil.create('div', 'info legend');
     var depth = [-10,10,30,50,70,90];
-    var colors = ['#df8782', '#e7a08c', '#eeb899', '#f4d0a9', '#fae8c0', '#ffd9c3', '#ffb0a4', '#ff8483', '#fd4e5d', '#e9002c']
+    var colors = ['#21b2b3', '#72c1b2', '#a0cfb4', '#c7deb9', '#e8edc7', '#ffdcc1', '#ffb89f', '#ff9278', '#ff644a', '#ff0000']
     var labels = [];
     // var labelsInfo = '<h4>Depth</h4>';
     // Add min & max
