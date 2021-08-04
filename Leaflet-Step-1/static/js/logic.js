@@ -104,23 +104,23 @@ d3.json(url).then(function (data) {
 function onEachFeature(feature, layer) {
     // console.log('Creating pop up'),
     //Pop up layer using title, title and magnitude
-    var popupText = (layer.bindPopup('<h2>' + 'Location : ' + '<br>' + feature.properties.title + '</h2>' + '<hr>' + '<h3>' + 'Type : ' + feature.properties.type + '</h3>' + '<h3>' + 'Magnitude : ' + feature.properties.mag + '</h3>'
+    var popupText = (layer.bindPopup('<h2>' + 'Location : ' + '<br>' + feature.properties.title + '</h2>' + '<hr>' + '<h3>' + 'Type : ' + feature.properties.type + '</h3>' + '<h3>' + 'Magnitude : ' + feature.properties.mag + '</h3>' + '<h3>' + 'Depth : '+feature.geometry.coordinates[2] + '</h3>'
     )).addTo(myMap)
 };
 
 // Defining legend
-var legend = L.control({ position: 'bottomright' });
+var legend = L.control({ position: 'bottomleft' });
 legend.onAdd = function () {
 
     var div = L.DomUtil.create('div', 'info legend');
     var depth = [-10,10,30,50,70,90];
     var colors = ['#df8782', '#e7a08c', '#eeb899', '#f4d0a9', '#fae8c0', '#ffd9c3', '#ffb0a4', '#ff8483', '#fd4e5d', '#e9002c']
     var labels = [];
-    var labelsInfo = '<h4>Depth</h4>';
+    // var labelsInfo = '<h4>Depth</h4>';
     // Add min & max
     div.innerHTML = '<h1>Depth</h1>'+'<div class="labels"><div class="min">' + depth[0] + '</div> \
     <div class="max">' + depth[depth.length - 1] + '</div></div>';
-    limits.forEach(function (depth, index) {
+    depth.forEach(function (depth, index) {
         labels.push('<li style="background-color: ' + colors[index] + '"></li>')
       })
       div.innerHTML += '<ul>' + labels.join('') + '</ul>'
