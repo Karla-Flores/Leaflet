@@ -16,9 +16,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(myMap);
 
 // Adding the tile layer // ask how to get the grey, ourdoors
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(myMap);
+// L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+//     attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+// }).addTo(myMap);
 
 // Depth function
 function getFillColor(depth) {
@@ -64,30 +64,37 @@ function getFillColor(depth) {
 }
 
 // Get Data
-d3.json(platesUrl).then(function (boundariesPlates) {
-    d3.json(url).then(function (data) {
-        console.log(data);
-        L.geoJSON(data, {
+d3.json(url).then(function (data) {
+    console.log(data);
+    L.geoJSON(data, {
 
-            onEachFeature: onEachFeature,
-            // Creating circle marker
-            pointToLayer: function (feature, latlng) {
-                console.log('Creatin marker');
-                return new L.CircleMarker(latlng, {
-                    // Defining circle radius according to the magnitude
-                    radius: feature.properties.mag * 4,
-                    fillColor: getFillColor(feature.geometry.coordinates[2]),
-                    fillOpacity: 0.6,
-                    weight: 0
-                }).addTo(myMap);
-            }
-        });
+        onEachFeature: onEachFeature,
+        // Creating circle marker
+        pointToLayer: function (feature, latlng) {
+            console.log('Creatin marker');
+            return new L.CircleMarker(latlng, {
+                // Defining circle radius according to the magnitude
+                radius: feature.properties.mag * 4,
+                fillColor: getFillColor(feature.geometry.coordinates[2]),
+                fillOpacity: 0.6,
+                weight: 0
+            }).addTo(myMap);
+        }
     });
-});
+}
+);
+
+d3.json(platesUrl).then(function (boundariesPlates) {
+    console.log(boundariesPlates);
+    L.geoJSON(data, {
+        onEachFeature: onEachFeature,
+        // createFeatures(boundariesPlates.features)
+    });
+})
 
 // Starting pop up layers
 function onEachFeature(feature, layer) {
-    // console.log('Creating pop up'),
+    // console.log('Creating pop up');
     // Time format
     var format = d3.timeFormat('%d-%b-%Y at %H:%M');
     //Pop up layer using title, title and magnitude
@@ -114,4 +121,3 @@ legend.onAdd = function () {
     return div
 };
 legend.addTo(myMap)
-
