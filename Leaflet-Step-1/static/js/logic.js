@@ -118,7 +118,7 @@ legend.onAdd = function () {
     var labels = [];
     // var labelsInfo = '<h4>Depth</h4>';
     // Add min & max
-    div.innerHTML = '<h1>Depth</h1>'+'<div class="labels"><div class="min">' + depth[0] + '</div> \
+    div.innerHTML = '<h2>Depth</h2>'+'<div class="labels"><div class="min">' + depth[0] + '</div> \
     <div class="max">' + depth[depth.length - 1] + '</div></div>';
     depth.forEach(function (depth, index) {
         labels.push('<li style="background-color: ' + colors[index] + '"></li>')
