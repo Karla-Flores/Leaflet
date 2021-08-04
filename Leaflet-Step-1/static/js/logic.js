@@ -95,7 +95,7 @@ d3.json(url).then(function (data) {
                 fillColor: getFillColor(feature.geometry.coordinates[2]),
                 fillOpacity: 0.6,
                 weight: 0
-            }).addTo(myMap);
+            }).addTo(myMap);   
         }
     });
 });
@@ -108,7 +108,7 @@ function onEachFeature(feature, layer) {
     )).addTo(myMap)
 };
 
-
+// Defining legend
 var legend = L.control({ position: 'bottomright' });
 legend.onAdd = function () {
 
