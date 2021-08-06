@@ -22,9 +22,9 @@ var myMap = L.map("map", {
 });
 
 // Adding the tile layer
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(myMap);
+// L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+// }).addTo(myMap);
 
 // Adding the topo layer // ask how to get the grey, ourdoors
 // L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
@@ -93,7 +93,6 @@ d3.json(url).then(function (data) {
     });
 });
 
-
 // Option 1 - Adding tectonic plates
 d3.json(platesUrl).then(function (boundariesPlates) {
     console.log(boundariesPlates);
@@ -105,6 +104,21 @@ d3.json(platesUrl).then(function (boundariesPlates) {
     }).addTo(tec).addTo(myMap)
 });
 
+// Objects, one will contain a base layers and one will contain overlay
+var baseMaps = {
+    'Topography': topography,
+    'Standard': standard
+    
+};
+var overlayMaps = {
+    'Earthquake': quakes,
+    'Tectonic plates': tec
+};
+
+// Control layer
+L.control.layers(baseMaps, overlayMaps , {
+    collapsed: false
+}).addTo(myMap);
 
 // Option 1 - Adding tectonic plates - Do not use
 // d3.json(platesUrl,function(response){
@@ -125,7 +139,6 @@ function onEachFeature(feature, layer) {
     )).addTo(myMap);
 };
 
-
 // Defining legend
 var legend = L.control({ position: 'bottomleft' });
 legend.onAdd = function () {
@@ -145,19 +158,3 @@ legend.onAdd = function () {
     return div
 };
 legend.addTo(myMap);
-
-// Objects, one will contain our base layers and one will contain our overlay
-var baseMaps = {
-    'Topography': topography,
-    'Standard': standard
-    
-};
-var overlayMaps = {
-    'Earthquake': quakes,
-    'Tectonic plates': tec
-};
-
-// Control layer
-L.control.layers(baseMaps, overlayMaps , {
-    collapsed: false
-}).addTo(myMap);
