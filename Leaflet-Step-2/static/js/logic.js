@@ -4,21 +4,32 @@ let url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.ge
 //
 let platesUrl = 'static/data/PB2002_boundaries.json';
 
+// Layer control variables
+var standard = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}),
+    topography = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+    })
+
+
 // Creating the map object
 var myMap = L.map("map", {
     center: [34.0522, -118.2437],
-    zoom: 5
+    zoom: 5,
+    layers: [standard, topography]
 });
+
 
 // Adding the tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(myMap);
 
-// Adding the tile layer // ask how to get the grey, ourdoors
-L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-    attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
-}).addTo(myMap);
+// Adding the topo layer // ask how to get the grey, ourdoors
+// L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+//     attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+// }).addTo(myMap);
 
 // Depth function
 function getFillColor(depth) {
@@ -89,7 +100,7 @@ d3.json(platesUrl).then(function (boundariesPlates) {
     L.geoJSON(boundariesPlates, {
         onEachFeature: onEachFeature,
         // color:'#ff0000',
-        color:'grey',
+        color: 'grey',
         weight: 5
     }).addTo(myMap)
 });
@@ -106,7 +117,7 @@ d3.json(platesUrl).then(function (boundariesPlates) {
 
 // Starting pop up layers
 function onEachFeature(feature, layer) {
-    // console.log('Creating pop up');
+    console.log('Creating pop up');
     // Time format
     var format = d3.timeFormat('%d-%b-%Y at %H:%M');
     //Pop up layer using title, title and magnitude
@@ -133,7 +144,18 @@ legend.onAdd = function () {
     div.innerHTML += '<ul>' + labels.join('') + '</ul>'
     return div
 };
-legend.addTo(myMap)
+legend.addTo(myMap);
 
-// Layer control
-// L.control.layer(,).addTo(myMap)
+// Objects, one will contain our base layers and one will contain our overlay
+var baseMaps = {
+    "Standard": standard,
+    'Topography': topography
+};
+var overlayMaps = {
+    // 'Earthquake': boundariesPlates
+};
+
+
+L.control.layers(baseMaps, overlayMaps , {
+    collapsed: false
+}).addTo(myMap);
