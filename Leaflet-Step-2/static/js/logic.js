@@ -1,7 +1,7 @@
 // Load the GeoJSON url.
 let url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson';
 
-//
+// Tectonic plates Json
 let platesUrl = 'static/data/PB2002_boundaries.json';
 
 // Layer control variables
@@ -11,7 +11,8 @@ var standard = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     topography = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
     })
-
+var quakes = new L.LayerGroup(),
+    tec = new L.LayerGroup()
 
 // Creating the map object
 var myMap = L.map("map", {
@@ -19,7 +20,6 @@ var myMap = L.map("map", {
     zoom: 5,
     layers: [standard, topography]
 });
-
 
 // Adding the tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -88,7 +88,7 @@ d3.json(url).then(function (data) {
                 fillColor: getFillColor(feature.geometry.coordinates[2]),
                 fillOpacity: 0.6,
                 weight: 0
-            }).addTo(myMap);
+            }).addTo(quakes).addTo(myMap);
         },
     });
 });
@@ -102,7 +102,7 @@ d3.json(platesUrl).then(function (boundariesPlates) {
         // color:'#ff0000',
         color: 'grey',
         weight: 5
-    }).addTo(myMap)
+    }).addTo(tec).addTo(myMap)
 });
 
 
@@ -148,14 +148,16 @@ legend.addTo(myMap);
 
 // Objects, one will contain our base layers and one will contain our overlay
 var baseMaps = {
-    "Standard": standard,
-    'Topography': topography
+    'Topography': topography,
+    'Standard': standard
+    
 };
 var overlayMaps = {
-    // 'Earthquake': boundariesPlates
+    'Earthquake': quakes,
+    'Tectonic plates': tec
 };
 
-
+// Control layer
 L.control.layers(baseMaps, overlayMaps , {
     collapsed: false
 }).addTo(myMap);
