@@ -67,7 +67,6 @@ function getFillColor(depth) {
 d3.json(url).then(function (data) {
     console.log(data);
     L.geoJSON(data, {
-
         onEachFeature: onEachFeature,
         // Creating circle marker
         pointToLayer: function (feature, latlng) {
@@ -79,18 +78,30 @@ d3.json(url).then(function (data) {
                 fillOpacity: 0.6,
                 weight: 0
             }).addTo(myMap);
-        }
+        },
     });
-}
-);
+});
 
+
+// Option 1 
 d3.json(platesUrl).then(function (boundariesPlates) {
     console.log(boundariesPlates);
-    L.geoJSON(data, {
+    L.geoJSON(boundariesPlates, {
         onEachFeature: onEachFeature,
+        color:'grey'
         // createFeatures(boundariesPlates.features)
-    });
-})
+    }).addTo(myMap)
+});
+
+
+// Option  2
+// d3.json(platesUrl,function(response){
+//     console.log(boundariesPlates);
+//     var tecto = response.features;
+//     var tectoData = L.geoJSON(tecto,{
+//         color:'#FD8F52'
+//     })
+// });
 
 // Starting pop up layers
 function onEachFeature(feature, layer) {
@@ -99,8 +110,9 @@ function onEachFeature(feature, layer) {
     var format = d3.timeFormat('%d-%b-%Y at %H:%M');
     //Pop up layer using title, title and magnitude
     var popupText = (layer.bindPopup('<h2>' + 'Location : ' + '<br>' + feature.properties.title + '</h2>' + '<hr>' + '<h3>' + 'Time : ' + (format(new Date(feature.properties.time))) + '</h3>' + '<h3>' + 'Type : ' + feature.properties.type + '</h3>' + '<h3>' + 'Magnitude : ' + feature.properties.mag + '</h3>' + '<h3>' + 'Depth : ' + feature.geometry.coordinates[2] + '</h3>'
-    )).addTo(myMap)
+    )).addTo(myMap);
 };
+
 
 // Defining legend
 var legend = L.control({ position: 'bottomleft' });
