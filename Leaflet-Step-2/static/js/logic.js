@@ -134,3 +134,6 @@ legend.onAdd = function () {
     return div
 };
 legend.addTo(myMap)
+
+// Layer control
+// L.control.layer(,).addTo(myMap)
