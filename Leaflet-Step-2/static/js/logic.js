@@ -134,7 +134,7 @@ function onEachFeature(feature, layer) {
     )).addTo(myMap);
 };
 
-// Defining legend
+// Defining legend 
 var legend = L.control({ position: 'bottomleft' });
 legend.onAdd = function () {
 
