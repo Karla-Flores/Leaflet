@@ -11,7 +11,7 @@
 <br>
 <h3>Step 3: Tectonic Plates Visualization</h3>
 <hr>
-<p align = 'justify'>This map is prepared to illustrate the relationship between tectonic plates and seismic activity. In addition to the original USGS GeoJSON data set, a second data set is visualized alongside the actual earthquake blobs. While using tectonic plate data, the bonus section allows the user to select the desired layer and background format from the following option:</p>
+<p align = 'justify'>This map is prepared to illustrate the relationship between <a href='https://github.com/fraxen/tectonicplates'>tectonic plates</a> and seismic activity. In addition to the original USGS GeoJSON data set, a second data set is visualized alongside the actual earthquake blobs. While using tectonic plate data, the bonus section allows the user to select the desired layer and background format from the following option:</p>
 <ul>
   <li>Standard</li>
   <li>Topographic</li>
