@@ -144,7 +144,7 @@ var legend = L.control({ position: 'bottomleft' });
 legend.onAdd = function () {
 
     var div = L.DomUtil.create('div', 'info legend');
-    var depth = [-10, 10,20, 30,40, 50, 60, 70, 80, 90];
+    var depth = [-10, 10, 20, 30, 40, 50, 60, 70, 80, 90];
     var colors = ['#ff0000', '#ff644a', '#ff9278', '#ffb89f', '#ffdcc1', '#e8edc7', '#c7deb9', '#a0cfb4', '#72c1b2', '#21b2b3']
     var labels = [];
     // var labelsInfo = '<h4>Depth</h4>';
