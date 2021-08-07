@@ -15,7 +15,7 @@ var quakes = new L.LayerGroup(),
     tec = new L.LayerGroup()
 
 // Creating the map object
-var myMap = L.map("map", {
+var myMap = L.map('map', {
     center: [34.0522, -118.2437],
     zoom: 5,
     layers: [standard, topography]
@@ -24,11 +24,6 @@ var myMap = L.map("map", {
 // Adding the tile layer
 // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-// }).addTo(myMap);
-
-// Adding the topo layer // ask how to get the grey, ourdoors
-// L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-//     attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
 // }).addTo(myMap);
 
 // Depth function
@@ -144,7 +139,7 @@ var legend = L.control({ position: 'bottomleft' });
 legend.onAdd = function () {
 
     var div = L.DomUtil.create('div', 'info legend');
-    var depth = [-10, 10, 30, 50, 70, 90];
+    var depth = [-10, 10,20, 30,40, 50, 60, 70, 80, 90];
     var colors = ['#ff0000', '#ff644a', '#ff9278', '#ffb89f', '#ffdcc1', '#e8edc7', '#c7deb9', '#a0cfb4', '#72c1b2', '#21b2b3']
     var labels = [];
     // var labelsInfo = '<h4>Depth</h4>';
