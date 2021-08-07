@@ -6,11 +6,16 @@
 
 <br>
 <h3>Step 1: Basic Visualization</h3>
+<hr>
 <p align = 'justify'>This map shows the earthquakes' magnitude and location over a single-layer map.  Visualizations are generated using the Leaflet library for Javascript in the static/js/logic.js file and called into the DOM in the index.html. This visualization is displayed over a single, plain layer using circles whose color and size vary according to the recorded earthquake's magnitude and depth. In addition, this interactive map allows for the user to view additional details using the map's tooltips, as shown in the figure below.</p>
 <br>
 <img src='https://github.com/Karla-Flores/Leaflet---Challenge/blob/main/Screenshots/Step_1_Basic_Visualization.png'>
 <br>
-<h3>Step 3: Techntonic Plates Visualization</h3>
+<h3>Step 3: Tectonic Plates Visualization</h3>
+<hr>
 <p align = 'justify'></p>
+<br>
+<img src='https://github.com/Karla-Flores/Leaflet---Challenge/blob/main/Screenshots/Step_2_Tectonic_Plates%20Visualization.png'>
+<br>
 <h3>Technical details</h3>
 <p align = 'justify'></p>
