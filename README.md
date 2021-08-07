@@ -23,7 +23,3 @@
     <td><img src='https://github.com/Karla-Flores/Leaflet---Challenge/blob/main/Screenshots/Step_2_Tectonic_Plates%20Visualization_2.png'></td>
   </tr>
 </table>
-
-<br>
-<h3>Technical details</h3>
-<p align = 'justify'></p>
